@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>시간 정렬 메모</title>
+    <link rel="stylesheet" type="text/css" href="time_alignment_note.css">
+</head>
+<body>
+    <div class="left_align">
+    </div>
+    <div class="backgroundmain">    
+        <div class="title_logo" onclick="reload()" style="user-select: none">
+            <h1>시간 정렬 메모</h1>
+        </div>
+        <div class="helpbutton">
+            <p onclick="help()" style="cursor: pointer; width: 50px;">도움말</p>
+        </div>
+        <div class="search_setting">
+            <select class="search_setting_select" onchange="search_select_change(this)">
+                <option value="내용">내 용</option>
+                <option value="기간">기 간</option>
+            </select>
+            <input class="search_setting_input" type="text" onkeydown="searchEnter(event)" placeholder="여기에 검색할 내용을 입력하세요" >
+            <button id="search_button" onclick="search_button_click()">검색</button>
+            <div class="order_container">
+                <button id="ascending_order">▲</button>
+                <button id="descending_order">▼</button>
+            </div>
+        </div>
+
+        <div class="Write_content">
+            
+            <div class="dropdown">
+                <select class="year_select">
+                    <option disabled selected hidden value="">년도</option>
+                </select>
+            </div>
+            <div class="dropdown">
+                <select class="month_select" onchange="base_update_days()">
+                    <option disabled selected hidden value="">월</option>
+                </select>
+            </div>
+            <div class="dropdown">
+                <select class="day_select" onclick="checkmonth()">
+                    <option disabled selected hidden value="">일</option>
+                </select>
+            </div>
+            <input class="time hour_input" type="text" placeholder="시간" style="width:50px" onkeydown="checkEnterKey(event, this, validateHour)">
+            <input class="time minute_input" type="text" placeholder="분" style="width:50px" onkeydown="checkEnterKey(event, this, validateMinute)">
+            <button id="add_button">내용추가</button>
+        </div>
+
+        <div class="memo">
+            <textarea class="memo_box" placeholder="메모를 입력하세요"></textarea>
+        </div>
+            <div id="memolist" class="memolistdesign"></div>
+    </div>
+
+    <div class="helpDIV" onclick="hide_img()">
+        <img src="도움말.jpg" alt="도움말 이미지가 없습니다" onclick="hide_img()">
+    </div>
+
+
+    <div class="right_align">
+    </div>
+    <script src="time_alignment_note.js"></script>
+</body>
+</html>
