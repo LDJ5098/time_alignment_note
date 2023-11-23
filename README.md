@@ -1,8 +1,7 @@
     ServerAdmin webmaster@localhost
-    DocumentRoot /root/etc/download/timeset
-    ServerName 192.197.111.100
+    DocumentRoot /var/www/html
 
-    <Directory "/root/etc/download/timeset">
+    <Directory /var/www/html/time_alignment_note>
         Options Indexes FollowSymLinks
         AllowOverride All
         Require all granted
