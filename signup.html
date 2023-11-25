@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-size: 14px;
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 85vh;
+            background-color: #f3f3f3; 
+        }
+
+        .signup-wrapper {
+            width: 400px;
+            padding: 40px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .signup-wrapper > h2 {
+            font-size: 24px;
+            color: rgb(24, 189, 112);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        #signup-form > input {
+            border: none;
+            width: 100%;
+            height: 48px;
+            padding: 0 10px;
+            margin-bottom: 16px;
+            border-radius: 6px;
+            background-color: #F8F8F8;
+            box-shadow: 1px 1px 4px #cacaca;
+        }
+
+        #signup-form > input::placeholder {
+            color: #cacaca;
+        }
+
+        #signup-form > input[type="submit"] {
+            color: #fff;
+            font-size: 16px;
+            background-color: rgb(24, 189, 112);
+            border: none;
+            border-radius: 6px;
+            padding: 10px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .login-link a {
+            color: rgb(24, 189, 112);
+            text-decoration: none;
+        }
+    </style>  
+</head>
+<body>
+    <div class="signup-wrapper">
+        <h2>회원가입</h2>
+        <form method="post" action="login.html" id="signup-form" onsubmit="return validateForm(event)">
+            <input type="text" id="userId" name="userId" placeholder="아이디">
+            <input type="password" id="userPassword" name="userPassword" placeholder="비밀번호">
+            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="비밀번호 확인">
+            <input type="submit" value="가입하기">
+        </form>
+        <div class="login-link">
+            이미 계정이 있으신가요? <a href="login.html">로그인</a>
+        </div>
+    </div>
+
+    <script>
+        async function validateForm(event) {
+            event.preventDefault(); // 기본 동작 중단
+
+            var userId = document.getElementById("userId").value;
+            var password = document.getElementById("userPassword").value;
+            var confirmPassword = document.getElementById("confirmPassword").value;
+
+            if (!userId || !password || !confirmPassword) {
+                alert("회원 정보를 전부 입력해주시기 바랍니다.");
+                return false;
+            }
+
+            if (password !== confirmPassword) {
+                alert("비밀번호가 일치하지 않습니다.");
+                return false;
+            }
+
+            try {
+                const response = await fetch("signup.php", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded",
+                    },
+                    body: "userId=" + userId,
+                });
+
+                const result = await response.text();
+
+                if (result === "exists") {
+                    alert("이미 존재하는 아이디입니다.");
+                    return false;
+                }
+
+                // 서버 측에서의 확인이 성공하면 폼 제출
+                alert("회원가입이 완료되었습니다.");
+                return true;
+            } catch (error) {
+                console.error("Fetch error:", error);
+                return false;
+            }
+        }
+
+    </script>
+
+</body>
+</html>
