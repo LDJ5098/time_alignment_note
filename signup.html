@@ -49,7 +49,7 @@
             color: #cacaca;
         }
 
-        #signup-form > input[type="button"] {
+        #signup-form > input[type="submit"] {
             color: #fff;
             font-size: 16px;
             background-color: rgb(24, 189, 112);
@@ -74,12 +74,12 @@
 <body>
     <div class="signup-wrapper">
         <h2>회원가입</h2>
-        <div id="signup-form">
+        <form id="signup-form" onsubmit="return false; validateAndSubmit();">
             <input type="text" id="userId" name="userId" placeholder="아이디">
             <input type="password" id="userPassword" name="userPassword" placeholder="비밀번호">
             <input type="password" id="confirmPassword" name="confirmPassword" placeholder="비밀번호 확인">
-            <input type="button" value="가입하기" onclick="validateAndSubmit()">
-        </div>
+            <input type="submit" value="가입하기" onclick="validateAndSubmit()">
+        </form>
         <div class="login-link">
             이미 계정이 있으신가요? <a href="index.html">로그인</a>
         </div>
