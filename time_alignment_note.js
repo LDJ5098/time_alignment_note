@@ -776,29 +776,47 @@ var ID = "ldj5098";
 
 function dataSave() {
     // 서버로 데이터 전송
-    const xhr = new XMLHttpRequest();
-    xhr.open("POST", "save_data.php", true);
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            console.log('데이터 전송 및 저장 성공');
-        }
-    };
-    xhr.send("ID=" + ID + "&mainlist=" + JSON.stringify(mainlist));
+    fetch("save_data.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: "ID=" + ID + "&mainlist=" + JSON.stringify(mainlist),
+    })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error("네트워크 응답이 올바르지 않습니다");
+            }
+            console.log("데이터 전송 및 저장 성공");
+        })
+        .catch((error) => {
+            console.error("dataSave 중 오류 발생:", error);
+        });
 }
 
 function dataLoad() {
     // 서버에서 데이터 불러오기
-    const xhr = new XMLHttpRequest();
-    xhr.open("POST", "load_data.php", true);
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            mainlist = JSON.parse(xhr.responseText);
-            console.log('데이터 불러오기 성공:', mainlist);
+    fetch("load_data.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: "ID=" + ID,
+    })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error("네트워크 응답이 올바르지 않습니다");
+            }
+            return response.json();
+        })
+        .then((data) => {
+            mainlist = data;
+            console.log("데이터 불러오기 성공:", mainlist);
             // 여기서 mainlist를 사용하여 필요한 작업을 수행
-        }
-    };
-    xhr.send("ID=" + ID);
+        })
+        .catch((error) => {
+            console.error("dataLoad 중 오류 발생:", error);
+        });
 }
+
 dataLoad();
