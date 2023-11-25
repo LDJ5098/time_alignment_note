@@ -787,7 +787,7 @@ var ID;
 
     var userIDParagraph = document.getElementById('userIDParagraph');
     if (userIDParagraph) {
-        userIDParagraph.textContent = "현재 사용자: " + ID;
+        userIDParagraph.textContent = "사용자: " + ID;
     }
 
 ////////////////////////////////사용자 클릭시 로그아웃 메뉴/////////////////////////////////////
