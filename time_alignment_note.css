@@ -74,8 +74,8 @@ body input{
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 70%;
-    height: auto;
+    width: auto;
+    height: 70%;
     border-style: solid;
     border-radius: 20px;
     border-color: black;
