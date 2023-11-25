@@ -49,7 +49,7 @@
             color: #cacaca;
         }
 
-        #signup-form > input[type="submit"] {
+        #signup-form > input[type="button"] {
             color: #fff;
             font-size: 16px;
             background-color: rgb(24, 189, 112);
@@ -74,61 +74,70 @@
 <body>
     <div class="signup-wrapper">
         <h2>회원가입</h2>
-        <form method="post" action="login.html" id="signup-form" onsubmit="return validateForm(event)">
+        <div id="signup-form">
             <input type="text" id="userId" name="userId" placeholder="아이디">
             <input type="password" id="userPassword" name="userPassword" placeholder="비밀번호">
             <input type="password" id="confirmPassword" name="confirmPassword" placeholder="비밀번호 확인">
-            <input type="submit" value="가입하기">
-        </form>
+            <input type="button" value="가입하기" onclick="validateAndSubmit()">
+        </div>
         <div class="login-link">
             이미 계정이 있으신가요? <a href="login.html">로그인</a>
         </div>
     </div>
-
     <script>
-        async function validateForm(event) {
-            event.preventDefault(); // 기본 동작 중단
-
+        function validateAndSubmit() {
+            // 사용자 입력값 가져오기
             var userId = document.getElementById("userId").value;
-            var password = document.getElementById("userPassword").value;
+            var userPassword = document.getElementById("userPassword").value;
             var confirmPassword = document.getElementById("confirmPassword").value;
 
-            if (!userId || !password || !confirmPassword) {
-                alert("회원 정보를 전부 입력해주시기 바랍니다.");
-                return false;
+            // 입력값이 비어있는지 확인
+            if (!userId || !userPassword || !confirmPassword) {
+                alert("회원 정보는 모두 입력해야 합니다");
+                return;
             }
 
-            if (password !== confirmPassword) {
-                alert("비밀번호가 일치하지 않습니다.");
-                return false;
+            // 비밀번호와 비밀번호 확인 일치 여부 확인
+            if (userPassword !== confirmPassword) {
+                alert("비밀번호가 일치하지 않습니다");
+                return;
             }
 
-            try {
-                const response = await fetch("signup.php", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/x-www-form-urlencoded",
-                    },
-                    body: "userId=" + userId,
-                });
-
-                const result = await response.text();
-
-                if (result === "exists") {
-                    alert("이미 존재하는 아이디입니다.");
-                    return false;
+            // 아이디 중복 확인
+            fetch("your_php_file.php", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: "userId=" + userId
+            })
+            .then(response => response.text())
+            .then(data => {
+                if (data === "exists") {
+                    alert("중복된 아이디입니다");
+                } else {
+                    // 아이디 중복이 아니면 회원가입 데이터 서버에 전송
+                    fetch("your_php_file.php", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/x-www-form-urlencoded"
+                        },
+                        body: "userId=" + userId + "&password=" + userPassword
+                    })
+                    .then(response => response.text())
+                    .then(responseData => {
+                        if (responseData === "not_exists_and_inserted") {
+                            alert("회원가입이 완료되었습니다");
+                            // 성공적으로 회원가입되면 로그인 페이지로 이동
+                            window.location.href = "login.html";
+                        } else {
+                            alert("회원가입 실패: " + responseData);
+                        }
+                    });
                 }
-
-                // 서버 측에서의 확인이 성공하면 폼 제출
-                alert("회원가입이 완료되었습니다.");
-                return true;
-            } catch (error) {
-                console.error("Fetch error:", error);
-                return false;
-            }
+            })
+            .catch(error => console.error("Error:", error));
         }
-
     </script>
-
 </body>
 </html>
