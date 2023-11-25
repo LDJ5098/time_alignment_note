@@ -812,7 +812,7 @@ function dataLoad() {
         .then((data) => {
             mainlist = data;
             console.log("데이터 불러오기 성공:", mainlist);
-            // 여기서 mainlist를 사용하여 필요한 작업을 수행
+            list_viewer();
         })
         .catch((error) => {
             console.error("dataLoad 중 오류 발생:", error);
