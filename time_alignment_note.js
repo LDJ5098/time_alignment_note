@@ -773,7 +773,6 @@ setInterval(total_time_refresh, 1000);
 
 //////////////////////////////정상적인 접근 확인/////////////////////////////////////////
 var ID;
-document.addEventListener("DOMContentLoaded", function () {
     // 사용자가 로그인했는지 확인
     var isLoggedIn = localStorage.getItem('isLoggedIn');
     var userId = localStorage.getItem('userId');
@@ -785,7 +784,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // 여기에 로그인된 사용자에 대한 추가적인 로직을 추가할 수 있습니다.
     console.log("사용자 아이디:", userId);
     ID = userId;
-});
 
 //////////////////////////////데이터 베이스///////////////////////////////////////
 
