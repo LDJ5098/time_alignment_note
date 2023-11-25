@@ -777,7 +777,7 @@ var ID = "ldj5098";
 function dataSave() {
     // 서버로 데이터 전송
     const xhr = new XMLHttpRequest();
-    xhr.open("POST", "save_Data.php", true);
+    xhr.open("POST", "save_data.php", true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
@@ -790,7 +790,7 @@ function dataSave() {
 function dataLoad() {
     // 서버에서 데이터 불러오기
     const xhr = new XMLHttpRequest();
-    xhr.open("POST", "load_Data.php", true);
+    xhr.open("POST", "load_data.php", true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
