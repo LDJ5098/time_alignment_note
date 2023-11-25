@@ -310,7 +310,7 @@ body input{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 200px; /* 적절한 너비로 조절하세요 */
+    width: 730px; /* 적절한 너비로 조절하세요 */
     margin: 10px;
 }
 
