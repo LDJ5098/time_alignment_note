@@ -771,44 +771,34 @@ function total_time_refresh(){
 
 setInterval(total_time_refresh, 1000);
 
-//////////////////////////////indexDB 데이터 베이스/////////////////////////////////////////
+//////////////////////////////데이터 베이스/////////////////////////////////////////
 var ID = "ldj5098";
 
-function dataSave(){  
-    var userID = ID;
-    var memo = mainlist;
-
-    $.ajax({
-        type: "POST",             // POST 방식으로 전송
-        url: "save_data.php",     // save_data.php 스크립트로 요청
-        data: { userID: userID, memo: memo },  // 전송할 데이터
-        success: function(response) {
-            alert(response);       // 성공 시 알림 메시지 표시
-        },
-        error: function(error) {
-            console.log(error);    // 오류가 발생한 경우 콘솔에 로그 출력
+function dataSave() {
+    // 서버로 데이터 전송
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", "saveData.php", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            console.log('데이터 전송 및 저장 성공');
         }
-    });
+    };
+    xhr.send("ID=" + ID + "&mainlist=" + JSON.stringify(mainlist));
 }
 
-function dataLoad(){
-    // 사용자가 입력한 데이터 가져오기
-    var userID = ID;
-
-    // AJAX를 사용하여 데이터를 서버에서 불러오기
-    $.ajax({
-        type: "POST",             // POST 방식으로 전송
-        url: "load_data.php",     // load_data.php 스크립트로 요청
-        data: { userID: userID }, // 전송할 데이터
-        success: function(response) {
-            var data = JSON.parse(response);  // JSON 형식의 응답 데이터를 JavaScript 객체로 변환
-            console.log(data);
-
-            // 데이터를 필요한 대로 사용 (예: UI 업데이트)
-        },
-        error: function(error) {
-            console.log(error);    // 오류가 발생한 경우 콘솔에 로그 출력
+function dataLoad() {
+    // 서버에서 데이터 불러오기
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", "loadData.php", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            mainlist = JSON.parse(xhr.responseText);
+            console.log('데이터 불러오기 성공:', mainlist);
+            // 여기서 mainlist를 사용하여 필요한 작업을 수행
         }
-    });
+    };
+    xhr.send("ID=" + ID);
 }
 dataLoad();
