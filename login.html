@@ -45,7 +45,7 @@
         #login-form > input::placeholder {
             color: #D2D2D2;
         }
-        #login-form > input[type="submit"] {
+        #login-form > input[type="button"] {
             color: #fff;
             font-size: 16px;
             background-color: rgb(24, 189, 112);
@@ -69,7 +69,7 @@
 <body>
     <div class="login-wrapper">
         <h2>시간 정렬 메모</h2>
-        <form method="post" action="119.200.201.60" id="login-form">
+        <div id="login-form">
             <input type="text" name="userName" placeholder="ID">
             <input type="password" name="userPassword" placeholder="Password">
             <div class="checkbox-section">
@@ -80,8 +80,42 @@
                     <a href="signup.html" id="signup-link">회원가입</a>
                 </div>
             </div>
-            <input type="submit" value="Login">
-        </form>
+            <input type="button" value="Login">
+        </div>
     </div>
+
+    <script>
+        function validateAndSubmit() {
+            // 사용자 입력값 가져오기
+            var userId = document.querySelector("#login-form input[name='userName']").value;
+            var userPassword = document.querySelector("#login-form input[name='userPassword']").value;
+
+            // 입력값이 비어있는지 확인
+            if (!userId || !userPassword) {
+                alert("아이디와 비밀번호를 모두 입력해야 합니다");
+                return;
+            }
+
+            // 로그인 데이터 서버에 전송
+            fetch("login.php", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: "userName=" + userId + "&userPassword=" + userPassword
+            })
+            .then(response => response.text())
+            .then(responseData => {
+                if (responseData === "exists") {
+                    alert("로그인 성공");
+                    //성공적으로 로그인 될 시 loaclhost로 이동
+                    window.location.href = "http://localhost/time_alignment_note.html";
+                } else {
+                    alert("로그인 실패: " + responseData);
+                }
+            })
+            .catch(error => console.error("Error:", error));
+        }
+    </script>
 </body>
 </html>
