@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($checkResult->num_rows > 0) {
             echo "exists";
         } else {
-            echo "로그인 실패: 아이디 또는 비밀번호가 일치하지 않습니다";
+            echo "아이디 또는 비밀번호가 일치하지 않습니다";
         }
     }
 }
