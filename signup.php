@@ -20,7 +20,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($checkResult->num_rows > 0) {
         echo "exists";
     } else {
-        echo "not_exists";
+        // 입력받은 ID가 중복이 아닌 경우, 새로운 레코드 추가
+        $password = $conn->real_escape_string($_POST['password']);
+        
+        $insertQuery = "INSERT INTO userdata (ID, Password) VALUES ('$userId', '$password')";
+        if ($conn->query($insertQuery) === TRUE) {
+            echo "not_exists_and_inserted";
+        } else {
+            echo "Error: " . $insertQuery . "<br>" . $conn->error;
+        }
     }
 }
 
