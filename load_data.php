@@ -1,33 +1,34 @@
 <?php
-$servername = "119.200.201.60";
+// 데이터베이스 연결 설정
+$servername = "localhost"; // 또는 '119.200.201.60'
 $username = "timememo_user";
 $password = "5097";
-$database = "timememo_userdatabase";
+$dbname = "timememoDB";
 
-$conn = new mysqli($servername, $username, $password, $database);
+// POST 요청으로 전송된 데이터 가져오기
+$ID = $_POST['ID'];
 
+// 데이터베이스 연결
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// 연결 확인
 if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    die("데이터베이스 연결 실패: " . $conn->connect_error);
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $userID = $_POST["userID"];
+// 입력받은 ID와 일치하는 레코드의 mainlist 값을 가져오기
+$sql = "SELECT mainlist FROM user_timememo WHERE ID = '$ID'";
+$result = $conn->query($sql);
 
-    // 데이터베이스에서 데이터 불러오기
-    $sql = "SELECT * FROM mainlist WHERE userID = '$userID'";
-    $result = $conn->query($sql);
-
-    $data = array();
-
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            $data[] = $row["memo"];
-        }
-        echo json_encode($data); // 데이터를 JSON 형식으로 반환
-    } else {
-        echo "No data found";
-    }
+if ($result->num_rows > 0) {
+    // 결과에서 데이터 추출
+    $row = $result->fetch_assoc();
+    $mainlist = json_decode($row['mainlist']);
+    echo json_encode($mainlist);
+} else {
+    echo "해당 ID에 대한 데이터가 없습니다.";
 }
 
+// 데이터베이스 연결 종료
 $conn->close();
 ?>
