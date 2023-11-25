@@ -785,6 +785,28 @@ var ID;
     console.log("사용자 아이디:", userId);
     ID = userId;
 
+    var userIDParagraph = document.getElementById('userIDParagraph');
+    if (userIDParagraph) {
+        userIDParagraph.textContent = "현재 사용자: " + ID;
+    }
+
+////////////////////////////////사용자 클릭시 로그아웃 메뉴/////////////////////////////////////
+function logout() {
+    // 사용자에게 로그아웃 여부를 묻는 알림창 표시
+    var logoutConfirmation = confirm("로그아웃 하시겠습니까?");
+
+    // 사용자가 'Yes'를 선택한 경우 로그아웃 및 리다이렉트 수행
+    if (logoutConfirmation) {
+        // 여기에 로그아웃 로직을 추가할 수 있습니다.
+        // (예: localStorage의 값을 초기화하고, 로그인 페이지로 리다이렉트)
+        localStorage.removeItem('isLoggedIn');
+        localStorage.removeItem('userId');
+        window.location.href = "index.html";
+    }
+}
+
+
+
 //////////////////////////////데이터 베이스///////////////////////////////////////
 
 function dataSave() {
