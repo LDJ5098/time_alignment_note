@@ -80,7 +80,7 @@
                     <a href="signup.html" id="signup-link">회원가입</a>
                 </div>
             </div>
-            <input type="button" value="Login">
+            <input type="button" value="Login" onclick="validateAndSubmit()">
         </div>
     </div>
 
@@ -109,7 +109,7 @@
                 if (responseData === "exists") {
                     alert("로그인 성공");
                     //성공적으로 로그인 될 시 loaclhost로 이동
-                    window.location.href = time_alignment_note.html";
+                    window.location.href = "time_alignment_note.html";
                 } else {
                     alert("로그인 실패: " + responseData);
                 }
