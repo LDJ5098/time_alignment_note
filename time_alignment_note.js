@@ -772,90 +772,43 @@ function total_time_refresh(){
 setInterval(total_time_refresh, 1000);
 
 //////////////////////////////indexDB 데이터 베이스/////////////////////////////////////////
-if (!window.indexedDB) {
-window.alert("당신의 브라우저에서는 indexDB를 지원하지 않기 때문에 웹의 영구적으로 메모를 저장하는 기능이 정상 작동 안할 수도 있습니다.");
-}
-
-function datasetting(){
-    var request = window.indexedDB.open("MymainlistDB", 1);
-    var db;
-    request.onupgradeneeded = function(event){
-        db = this.result;
-        db.createObjectStore('mainlistDB', {keyPath: 'mainlistDBkey'});
-    }
-    request.onerror = function() {
-        console.log('setting:DB 접근 실패');
-    }
-    request.onsuccess = function() {
-        console.log('setting:DB 접근 성공');
-    }
-}
-datasetting();
+var ID = "ldj5098";
 
 function dataSave(){  
-    var request = window.indexedDB.open("MymainlistDB", 1);
-    var db; 
-    console.log('datasave가 실행되었습니다.');
-    request.onerror = function() {
-        console.log('save:DB 접근 실패');
-    }   
+    var userID = ID;
+    var memo = mainlist;
 
-request.onsuccess = function() {
-    console.log('save:DB 접근 성공');
-    db = this.result;
-
-    var transaction = db.transaction(['mainlistDB'], 'readwrite');
-
-    transaction.oncomplete =function(){
-        console.log('save:트랜지션 접근 성공');
-    };
-
-    transaction.onerror =function(){
-        console.log('save:트랜지션 접근 실패');
-    };
-
-    var objectStore = transaction.objectStore('mainlistDB');
-    
-    objectStore.put({ mainlistDBkey: 'mainlistdata', value: mainlist });
-}
+    $.ajax({
+        type: "POST",             // POST 방식으로 전송
+        url: "save_data.php",     // save_data.php 스크립트로 요청
+        data: { userID: userID, memo: memo },  // 전송할 데이터
+        success: function(response) {
+            alert(response);       // 성공 시 알림 메시지 표시
+        },
+        error: function(error) {
+            console.log(error);    // 오류가 발생한 경우 콘솔에 로그 출력
+        }
+    });
 }
 
 function dataLoad(){
-    var request = window.indexedDB.open("MymainlistDB", 1);
-    var db;
+    // 사용자가 입력한 데이터 가져오기
+    var userID = ID;
 
-    request.onerror = function() {
-        console.log('load:DB 접근 실패');
-    }
-    request.onsuccess = function() {
-        console.log('load:DB 접근 성공');
-        db = this.result;
+    // AJAX를 사용하여 데이터를 서버에서 불러오기
+    $.ajax({
+        type: "POST",             // POST 방식으로 전송
+        url: "load_data.php",     // load_data.php 스크립트로 요청
+        data: { userID: userID }, // 전송할 데이터
+        success: function(response) {
+            var data = JSON.parse(response);  // JSON 형식의 응답 데이터를 JavaScript 객체로 변환
+            console.log(data);
 
-        var transaction = db.transaction(['mainlistDB'], 'readonly');
-
-        transaction.oncomplete =function(){
-            console.log('load:트랜지션 접근 성공');
-        };
-
-        transaction.onerror =function(){
-            console.log('load:트랜지션 접근 실패');
-        };
-
-        var objectStore = transaction.objectStore('mainlistDB');
-
-        if(objectStore.count()==0)return;
-        objectStore.count().onsuccess = function(event) {
-            var count = event.target.result;
-            if(count==0)console.log('indexDB에 저장된 값이 없습니다');
-            else{
-                objectStore.get('mainlistdata').onsuccess = function(event) {
-                    var result = event.target.result.value;
-                        console.log(result);
-                        mainlist=result;
-                        list_viewer();
-                }
-            }
+            // 데이터를 필요한 대로 사용 (예: UI 업데이트)
+        },
+        error: function(error) {
+            console.log(error);    // 오류가 발생한 경우 콘솔에 로그 출력
         }
-    }
+    });
 }
 dataLoad();
