@@ -1,5 +1,5 @@
 <?php
-$servername = "119.200.201.60";
+$servername = "localhost";
 $username = "timememo_user";
 $password = "5097";
 $dbname = "timememoDB";
