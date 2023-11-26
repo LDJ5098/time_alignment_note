@@ -108,7 +108,7 @@
             .then(response => response.text())
             .then(responseData => {
                 if (responseData === "exists") {
-                    // 사용자 정보를 localStorage에 저장
+                    // 사용자 정보를 sessionStorage에 저장
                     sessionStorage.setItem('isLoggedIn', 'true');
                     sessionStorage.setItem('userId', userId);
 
