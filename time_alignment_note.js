@@ -792,12 +792,12 @@ var ID;
 
 /////////////////////////////페이지가 닫히거나 벗어날 때 자동 로그인 해제//////////////////
 
-window.onbeforeunload=function(){
+window.addEventListener('beforeunload', function(event) {
     // 페이지가 닫히거나 벗어날 때 로컬 스토리지 데이터를 지웁니다.
+    console.log(event);
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('userId');
-    return'';
-}
+});
 
 
 ////////////////////////////////사용자 클릭시 로그아웃 메뉴/////////////////////////////////////
