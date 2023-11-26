@@ -771,15 +771,20 @@ function total_time_refresh(){
 
 setInterval(total_time_refresh, 1000);
 
+/////////////////////////////페이지가 닫히거나 벗어날 때 자동 로그인 해제//////////////////
+window.addEventListener('beforeunload', function() {
+    // 페이지가 닫히거나 벗어날 때 로컬 스토리지 데이터를 지웁니다.
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('userId');
+});
+
 //////////////////////////////정상적인 접근 확인/////////////////////////////////////////
 var ID;
-    // URL에서 매개변수 읽어오기
-    var urlParams = new URLSearchParams(window.location.search);
-    var loginStatusParam = urlParams.get('login_status');
-    var userId = urlParams.get('user_id');
-
-    if (loginStatusParam !== 'success' || !userId) {
-        // 로그인이 되어있지 않거나 URL에 필요한 매개변수가 없으면 로그인 페이지로 리다이렉트
+    // 사용자가 로그인했는지 확인
+    var isLoggedIn = localStorage.getItem('isLoggedIn');
+    var userId = localStorage.getItem('userId');
+    if (isLoggedIn !== 'true' || !userId) {
+        // 로그인이 되어있지 않으면 로그인 페이지로 리다이렉트
         window.location.href = "index.html";
     }
 
@@ -792,11 +797,6 @@ var ID;
         userIDParagraph.textContent = "사용자: " + ID;
     }
 
-/////////////////////////////페이지가 닫히거나 벗어날 때 자동 로그인 해제//////////////////
-window.addEventListener('beforeunload', function(event) {
-    // 페이지가 닫히거나 벗어날 때 로컬 스토리지 데이터를 지웁니다.
-    history.pushState({}, document.title, window.location.pathname);
-});
 
 ////////////////////////////////사용자 클릭시 로그아웃 메뉴/////////////////////////////////////
 function logout() {
@@ -806,11 +806,7 @@ function logout() {
     // 사용자가 'Yes'를 선택한 경우 로그아웃 및 리다이렉트 수행
     if (logoutConfirmation) {
         // 여기에 로그아웃 로직을 추가할 수 있습니다.
-
-        // URL에서 매개변수 제거
-        history.pushState({}, document.title, window.location.pathname);
-
-        // 로그인 페이지로 리다이렉트
+        // (예: localStorage의 값을 초기화하고, 로그인 페이지로 리다이렉트)
         window.location.href = "index.html";
     }
 }
