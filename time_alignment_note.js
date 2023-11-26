@@ -776,6 +776,9 @@ setInterval(total_time_refresh, 1000);
 window.onload=function(){
     localStorage.setItem('isLoggedIn', sessionStorage.getItem('isLoggedIn'));
     localStorage.setItem('userId', sessionStorage.getItem('userId'));
+
+    sessionStorage.removeItem('isLoggedIn');
+    sessionStorage.removeItem('userId');
 }
 
 window.addEventListener('beforeunload', function (event) {
