@@ -773,23 +773,22 @@ setInterval(total_time_refresh, 1000);
 
 /////////////////////////////페이지가 닫히거나 벗어날 때 자동 로그인 해제//////////////////
 
-var local_risl = localStorage.getItem('r_isLoggedIn');
-var local_ruser = localStorage.getItem('r_userId');
-
-if(local_risl && local_ruser){
-    localStorage.setItem('isLoggedIn', local_risl);
-    localStorage.setItem('userId', local_ruser);
+window.onload = function () {
+    // sessionStorage에 임시 데이터가 있는지 확인하고 있다면 localStorage로 복원
+    if (sessionStorage.getItem('temporaryData')) {
+        localStorage.setItem('isLoggedIn', sessionStorage.getItem('isLoggedIn'));
+        localStorage.setItem('userId', sessionStorage.getItem('userId'));
+        sessionStorage.removeItem('temporaryData');
+    }
 };
 
-localStorage.removeItem('r_isLoggedIn');
-localStorage.removeItem('_ruserId');
-
 window.addEventListener('beforeunload', function (event) {
-    // 페이지가 닫히거나 벗어날 때 로컬 스토리지 데이터를 지웁니다.
+    // localStorage에서 데이터를 제거하기 전에 sessionStorage에 데이터를 저장
+    sessionStorage.setItem('temporaryData', 'true');
+    sessionStorage.setItem('isLoggedIn', localStorage.getItem('isLoggedIn'));
+    sessionStorage.setItem('userId', localStorage.getItem('userId'));
 
-    localStorage.setItem('r_isLoggedIn', localStorage.getItem('isLoggedIn'));
-    localStorage.setItem('r_userId', localStorage.getItem('userId'));
-
+    // localStorage에서 데이터 제거
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('userId');
 });
