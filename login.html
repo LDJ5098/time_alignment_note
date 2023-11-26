@@ -108,12 +108,9 @@
             .then(response => response.text())
             .then(responseData => {
                 if (responseData === "exists") {
-                    // 사용자 정보를 localStorage에 저장
-                    localStorage.setItem('isLoggedIn', 'true');
-                    localStorage.setItem('userId', userId);
-
                     // 원하는 페이지로 리다이렉트
-                    window.location.href = "time_alignment_note.html";
+                    var redirectURL = "time_alignment_note.html?login_status=success&user_id=" + userId;
+                    window.location.href = redirectURL;
                 } else {
                     alert("로그인 실패: " + responseData);
                 }
