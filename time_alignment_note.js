@@ -772,14 +772,18 @@ function total_time_refresh(){
 setInterval(total_time_refresh, 1000);
 
 /////////////////////////////페이지가 닫히거나 벗어날 때 자동 로그인 해제//////////////////
-window.addEventListener('beforeunload', function (event) {
-    // 페이지가 닫히거나 벗어날 때만 실행되도록 조건을 추가합니다.
-    if (!event.currentTarget.performance.navigation.type === 1) {
-        // 새로고침인 경우 실행하지 않습니다.
-        return;
-    }
 
+window.onload=function(){
+    localStorage.setItem('isLoggedIn', sessionStorage.getItem('isLoggedIn'));
+    localStorage.setItem('userId', sessionStorage.getItem('userId'));
+}
+
+window.addEventListener('beforeunload', function (event) {
     // 페이지가 닫히거나 벗어날 때 로컬 스토리지 데이터를 지웁니다.
+
+    sessionStorage.setItem('isLoggedIn', localStorage.getItem('isLoggedIn'));
+    sessionStorage.setItem('userId', localStorage.getItem('userId'));
+
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('userId');
 });
