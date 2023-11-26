@@ -777,7 +777,7 @@ var ID;
     var isLoggedIn = localStorage.getItem('isLoggedIn');
     var userId = localStorage.getItem('userId');
     if (isLoggedIn !== 'true' || !userId) {
-        // 로그인이 되어있지 않으면 로그인 페이지로 리다이렉트
+        // 로그인이 되어있지 않으면 로그인 페이지로 리다이렉트 수행
         window.location.href = "index.html";
     }
 
@@ -790,6 +790,15 @@ var ID;
         userIDParagraph.textContent = "사용자: " + ID;
     }
 
+/////////////////////////////페이지가 닫히거나 벗어날 때 자동 로그인 해제//////////////////
+
+window.addEventListener('beforeunload', function() {
+    // 페이지가 닫히거나 벗어날 때 로컬 스토리지 데이터를 지웁니다.
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('userId');
+});
+
+
 ////////////////////////////////사용자 클릭시 로그아웃 메뉴/////////////////////////////////////
 function logout() {
     // 사용자에게 로그아웃 여부를 묻는 알림창 표시
@@ -798,9 +807,6 @@ function logout() {
     // 사용자가 'Yes'를 선택한 경우 로그아웃 및 리다이렉트 수행
     if (logoutConfirmation) {
         // 여기에 로그아웃 로직을 추가할 수 있습니다.
-        // (예: localStorage의 값을 초기화하고, 로그인 페이지로 리다이렉트)
-        localStorage.removeItem('isLoggedIn');
-        localStorage.removeItem('userId');
         window.location.href = "index.html";
     }
 }
