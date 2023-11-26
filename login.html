@@ -109,8 +109,8 @@
             .then(responseData => {
                 if (responseData === "exists") {
                     // 사용자 정보를 localStorage에 저장
-                    localStorage.setItem('isLoggedIn', 'true');
-                    localStorage.setItem('userId', userId);
+                    sessionStorage.setItem('isLoggedIn', 'true');
+                    sessionStorage.setItem('userId', userId);
 
                     // 원하는 페이지로 리다이렉트
                     window.location.href = "time_alignment_note.html";
