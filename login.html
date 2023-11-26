@@ -86,16 +86,17 @@
     </div>
 
     <script>
+
         var isLoggedIn = localStorage.getItem('r_isLoggedIn');
-        var userId = localStorage.getItem('r_userId');
-        if (isLoggedIn == 'true' && userId) {
+        var userId_local = localStorage.getItem('r_userId');
+        if (isLoggedIn == 'true' && userId_local) {
             // 스토리지에 데이터가 남아있으면 시간정렬메모로 이동
             window.location.href = "time_alignment_note.html";
         }
 
         var isLoggedIn = localStorage.getItem('isLoggedIn');
-        var userId = localStorage.getItem('userId');
-        if (isLoggedIn == 'true' && userId) {
+        var userId_local = localStorage.getItem('userId');
+        if (isLoggedIn == 'true' && userId_local) {
             // 스토리지에 데이터가 남아있으면 시간정렬메모로 이동
             window.location.href = "time_alignment_note.html";
         }
