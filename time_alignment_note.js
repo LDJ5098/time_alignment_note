@@ -772,10 +772,16 @@ function total_time_refresh(){
 setInterval(total_time_refresh, 1000);
 
 /////////////////////////////로그인 유지에 체크가 되어 있는가//////////////////
-if (localStorage.getItem('remembercheck')){
+if (localStorage.getItem('rememberID')&&localStorage.getItem('remembercheck')==='true'){
     sessionStorage.setItem('isLoggedIn', 'true');
     sessionStorage.setItem('userId', localStorage.getItem('remembercheck'));
 }
+
+if(!localStorage.getItem('rememberID')&&!localStorage.getItem('remembercheck')){
+    sessionStorage.removeItem('isLoggedIn');
+    sessionStorage.removeItem('userId');
+}
+
 //////////////////////////////정상적인 접근 확인////////////////////////////////////////
 var ID;
     // 사용자가 로그인했는지 확인
@@ -808,6 +814,7 @@ function logout() {
         sessionStorage.removeItem('isLoggedIn');
         sessionStorage.removeItem('userId');
         localStorage.removeItem('remembercheck');
+        localStorage.removeItem('rememberID');
         window.location.href = "index.html";
     }
 }
