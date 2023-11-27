@@ -90,9 +90,10 @@
             sessionStorage.setItem('userId', localStorage.getItem('remembercheck'));
         }
 
-        if(!localStorage.getItem('rememberID')&&!localStorage.getItem('remembercheck')){
+        if (!localStorage.getItem('rememberID')&&localStorage.getItem('remembercheck')==='true'){
             sessionStorage.removeItem('isLoggedIn');
             sessionStorage.removeItem('userId');
+            localStorage.removeItem('remembercheck');
         }
 
         var isLoggedIn = sessionStorage.getItem('isLoggedIn');
