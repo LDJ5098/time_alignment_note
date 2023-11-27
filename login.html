@@ -86,8 +86,8 @@
     </div>
 
     <script>
-        var isLoggedIn = localStorage.getItem('isLoggedIn');
-        var userId = localStorage.getItem('userId');
+        var isLoggedIn = sessionStorage.getItem('isLoggedIn');
+        var userId = sessionStorage.getItem('userId');
         if (isLoggedIn == 'true' && userId) {
             // 스토리지에 데이터가 남아있으면 시간정렬메모로 이동
             window.location.href = "time_alignment_note.html";
@@ -115,7 +115,7 @@
             .then(response => response.text())
             .then(responseData => {
                 if (responseData === "exists") {
-                    // 사용자 정보를 sesstionStorage에 저장
+                    // 사용자 정보를 localStorage에 저장
                     sessionStorage.setItem('isLoggedIn', 'true');
                     sessionStorage.setItem('userId', userId);
 
