@@ -85,6 +85,13 @@
         </div>
     </div>
     <script>
+        var isLoggedIn = sessionStorage.getItem('isLoggedIn');
+        var userId = sessionStorage.getItem('userId');
+        if (isLoggedIn == 'true' && userId) {
+            // 스토리지에 데이터가 남아있으면 시간정렬메모로 이동
+            window.location.href = "time_alignment_note.html";
+        }
+
         function validateAndSubmit() {
             // 사용자 입력값 가져오기
             var userId = document.getElementById("userId").value;
