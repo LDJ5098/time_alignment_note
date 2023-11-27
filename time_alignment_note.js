@@ -772,13 +772,8 @@ function total_time_refresh(){
 setInterval(total_time_refresh, 1000);
 
 /////////////////////////////페이지가 닫히거나 벗어날 때 자동 로그인 해제//////////////////
-window.addEventListener('beforeunload', function() {
-    // 페이지가 닫히거나 벗어날 때 로컬 스토리지 데이터를 지웁니다.
-    sessionStorage.removeItem('isLoggedIn');
-    sessionStorage.removeItem('userId');
-});
 
-//////////////////////////////정상적인 접근 확인/////////////////////////////////////////
+//////////////////////////////정상적인 접근 확인////////////////////////////////////////
 var ID;
     // 사용자가 로그인했는지 확인
     var isLoggedIn = sessionStorage.getItem('isLoggedIn');
@@ -807,6 +802,8 @@ function logout() {
     if (logoutConfirmation) {
         // 여기에 로그아웃 로직을 추가할 수 있습니다.
         // (예: localStorage의 값을 초기화하고, 로그인 페이지로 리다이렉트)
+        sessionStorage.removeItem('isLoggedIn');
+        sessionStorage.removeItem('userId');
         window.location.href = "index.html";
     }
 }
