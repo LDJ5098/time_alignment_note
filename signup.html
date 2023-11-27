@@ -85,6 +85,11 @@
         </div>
     </div>
     <script>
+        if (localStorage.getItem('remembercheck')){
+            sessionStorage.setItem('isLoggedIn', 'true');
+            sessionStorage.setItem('userId', localStorage.getItem('remembercheck'));
+        }
+
         var isLoggedIn = sessionStorage.getItem('isLoggedIn');
         var userId = sessionStorage.getItem('userId');
         if (isLoggedIn == 'true' && userId) {
