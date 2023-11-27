@@ -93,8 +93,6 @@
         if (!localStorage.getItem('rememberID')&&localStorage.getItem('remembercheck')==='true'){
             sessionStorage.removeItem('isLoggedIn');
             sessionStorage.removeItem('userId');
-            localStorage.removeItem('remembercheck');
-            window.location.href = "index.html";
         }
 
         var isLoggedIn = sessionStorage.getItem('isLoggedIn');
@@ -129,7 +127,7 @@
             .then(responseData => {
                 if (responseData === "exists") {
                     // 사용자 정보를 localStorage에 저장
-
+                    localStorage.removeItem('remembercheck');
                     var remembercheck = document.getElementById('remember-check');
                     if(remembercheck.checked){
                         localStorage.setItem('rememberID', userId);
