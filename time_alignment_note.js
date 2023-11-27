@@ -777,9 +777,10 @@ if (localStorage.getItem('rememberID')&&localStorage.getItem('remembercheck')===
     sessionStorage.setItem('userId', localStorage.getItem('remembercheck'));
 }
 
-if(!localStorage.getItem('rememberID')&&!localStorage.getItem('remembercheck')){
+if (!localStorage.getItem('rememberID')&&localStorage.getItem('remembercheck')==='true'){
     sessionStorage.removeItem('isLoggedIn');
     sessionStorage.removeItem('userId');
+    localStorage.removeItem('remembercheck');
 }
 
 //////////////////////////////정상적인 접근 확인////////////////////////////////////////
@@ -813,7 +814,6 @@ function logout() {
         // (예: localStorage의 값을 초기화하고, 로그인 페이지로 리다이렉트)
         sessionStorage.removeItem('isLoggedIn');
         sessionStorage.removeItem('userId');
-        localStorage.removeItem('remembercheck');
         localStorage.removeItem('rememberID');
         window.location.href = "index.html";
     }
