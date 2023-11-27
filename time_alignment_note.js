@@ -774,7 +774,7 @@ setInterval(total_time_refresh, 1000);
 /////////////////////////////로그인 유지에 체크가 되어 있는가//////////////////
 if (localStorage.getItem('rememberID')&&localStorage.getItem('remembercheck')==='true'){
     sessionStorage.setItem('isLoggedIn', 'true');
-    sessionStorage.setItem('userId', localStorage.getItem('remembercheck'));
+    sessionStorage.setItem('userId', localStorage.getItem('rememberID'));
 }
 
 if (!localStorage.getItem('rememberID')&&localStorage.getItem('remembercheck')==='true'){
