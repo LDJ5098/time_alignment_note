@@ -829,6 +829,10 @@ function logout() {
     if (logoutConfirmation) {
         // 여기에 로그아웃 로직을 추가할 수 있습니다.
         // (예: localStorage의 값을 초기화하고, 로그인 페이지로 리다이렉트)
+        sessionStorage.removeItem('isPageRefreshed');
+        sessionStorage.removeItem('isLoggedIn');
+        sessionStorage.removeItem('userId');
+
         window.location.href = "index.html";
     }
 }
