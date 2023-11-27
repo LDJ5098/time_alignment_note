@@ -771,29 +771,13 @@ function total_time_refresh(){
 
 setInterval(total_time_refresh, 1000);
 
-////////////////세션 스토리지를 로컬 스토리지에 복사하기//////////////////
-if(!localStorage.getItem('isLoggedIn')&&!localStorage.getItem('userId')&&sessionStorage.getItem('isLoggedIn')&&sessionStorage.getItem('userId')){
-    localStorage.setItem('isLoggedIn', sessionStorage.getItem('isLoggedIn'));
-    localStorage.setItem('userId', sessionStorage.getItem('userId'));
-}
-
-if(!sessionStorage.getItem('isLoggedIn')&&!sessionStorage.getItem('userId')){
-    localStorage.removeItem('isLoggedIn');
-    localStorage.removeItem('userId');
-    window.location.href = "index.html";
-}
-
-
+/////////////////////////////페이지가 닫히거나 벗어날 때 자동 로그인 해제//////////////////
 
 //////////////////////////////정상적인 접근 확인////////////////////////////////////////
 var ID;
     // 사용자가 로그인했는지 확인
-    var isLoggedIn = localStorage.getItem('isLoggedIn');
-    var userId = localStorage.getItem('userId');
-
-    sessionStorage.setItem('isLoggedIn', localStorage.getItem('isLoggedIn'));
-    sessionStorage.setItem('userId', localStorage.getItem('userId'));
-
+    var isLoggedIn = sessionStorage.getItem('isLoggedIn');
+    var userId = sessionStorage.getItem('userId');
     if (isLoggedIn !== 'true' || !userId) {
         // 로그인이 되어있지 않으면 로그인 페이지로 리다이렉트
         window.location.href = "index.html";
@@ -818,9 +802,6 @@ function logout() {
     if (logoutConfirmation) {
         // 여기에 로그아웃 로직을 추가할 수 있습니다.
         // (예: localStorage의 값을 초기화하고, 로그인 페이지로 리다이렉트)
-        localStorage.removeItem('isLoggedIn');
-        localStorage.removeItem('userId');
-        
         sessionStorage.removeItem('isLoggedIn');
         sessionStorage.removeItem('userId');
         window.location.href = "index.html";
