@@ -771,31 +771,55 @@ function total_time_refresh(){
 
 setInterval(total_time_refresh, 1000);
 
+/////////////////////////////페이지 로드 감지//////////////////////////////////////////
+var ID;
+window.onload = function () {
+    // 이전에 저장된 세션 스토리지의 상태를 가져옴
+    var isPageRefreshed = sessionStorage.getItem('isPageRefreshed');
+
+    // 세션 스토리지에 상태가 없으면(처음 로드되었을 때)
+    if (isPageRefreshed === null) {
+        // "페이지가 처음 로드됨"을 콘솔에 출력
+        console.log("페이지가 처음 로드됨");
+
+        // 세션 스토리지에 "페이지가 이미 로드되었음"을 저장
+        sessionStorage.setItem('isPageRefreshed', 'true');
+        sessionStorage.setItem('isLoggedIn',localStorage.getItem('isLoggedIn'));
+        sessionStorage.setItem('userId',localStorage.getItem('userId'));
+    } else {
+      // "페이지가 새로고침됨"을 콘솔에 출력
+        console.log("페이지가 새로고침됨");
+        localStorage.setItem('isLoggedIn',sessionStorage.getItem('isLoggedIn'));
+        localStorage.setItem('userId',sessionStorage.getItem('userId'));
+
+
+      //////////////////////////////정상적인 접근 확인/////////////////////////////////////////
+        // 사용자가 로그인했는지 확인
+        var isLoggedIn = localStorage.getItem('isLoggedIn');
+        var userId = localStorage.getItem('userId');
+        if (isLoggedIn !== 'true' || !userId) {
+            // 로그인이 되어있지 않으면 로그인 페이지로 리다이렉트
+            window.location.href = "index.html";
+        }
+
+        // 여기에 로그인된 사용자에 대한 추가적인 로직을 추가할 수 있습니다.
+        console.log("사용자 아이디:", userId);
+        ID = userId;
+
+        var userIDParagraph = document.getElementById('userIDParagraph');
+        if (userIDParagraph) {
+            userIDParagraph.textContent = "사용자: " + ID;
+        }
+    }
+  };
+
+
 /////////////////////////////페이지가 닫히거나 벗어날 때 자동 로그인 해제//////////////////
 window.addEventListener('beforeunload', function() {
     // 페이지가 닫히거나 벗어날 때 로컬 스토리지 데이터를 지웁니다.
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('userId');
 });
-
-//////////////////////////////정상적인 접근 확인/////////////////////////////////////////
-var ID;
-    // 사용자가 로그인했는지 확인
-    var isLoggedIn = localStorage.getItem('isLoggedIn');
-    var userId = localStorage.getItem('userId');
-    if (isLoggedIn !== 'true' || !userId) {
-        // 로그인이 되어있지 않으면 로그인 페이지로 리다이렉트
-        window.location.href = "index.html";
-    }
-
-    // 여기에 로그인된 사용자에 대한 추가적인 로직을 추가할 수 있습니다.
-    console.log("사용자 아이디:", userId);
-    ID = userId;
-
-    var userIDParagraph = document.getElementById('userIDParagraph');
-    if (userIDParagraph) {
-        userIDParagraph.textContent = "사용자: " + ID;
-    }
 
 
 ////////////////////////////////사용자 클릭시 로그아웃 메뉴/////////////////////////////////////
