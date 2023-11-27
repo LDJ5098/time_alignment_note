@@ -87,7 +87,7 @@
     <script>
         if (localStorage.getItem('rememberID')&&localStorage.getItem('remembercheck')==='true'){
             sessionStorage.setItem('isLoggedIn', 'true');
-            sessionStorage.setItem('userId', localStorage.getItem('remembercheck'));
+            sessionStorage.setItem('userId', localStorage.getItem('rememberID'));
         }
 
         if (!localStorage.getItem('rememberID')&&localStorage.getItem('remembercheck')==='true'){
