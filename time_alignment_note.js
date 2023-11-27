@@ -781,6 +781,7 @@ if (!localStorage.getItem('rememberID')&&localStorage.getItem('remembercheck')==
     sessionStorage.removeItem('isLoggedIn');
     sessionStorage.removeItem('userId');
     localStorage.removeItem('remembercheck');
+    window.location.href = "index.html";
 }
 
 //////////////////////////////정상적인 접근 확인////////////////////////////////////////
